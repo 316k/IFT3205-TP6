@@ -104,7 +104,7 @@ int main(int argc,char **argv)
   
   k=0;
   
-  for(i=0; i<length - 255; i += 256) {
+  for(i=0; i<length - 256; i += 256) {
       k++;
       for(j=0; j<512; j++) {
           buff[j] = Sign1[i + j];
@@ -114,8 +114,8 @@ int main(int argc,char **argv)
       FFT1D(buff, buffi, 512);
       
       for(j=0; j<512; j++) {
-          buffmoy[j] += buff[j];
-          buffmoyi[j] += buffi[j];
+          buffmoy[j] += fabs(buff[j]);
+          buffmoyi[j] += fabs(buffi[j]);
       }
   }
 

@@ -4,4 +4,3 @@ echo compilation du programme ${a=${1}.c}
 killall display gv
 gcc -c FonctionDemo6.c
 gcc -g -o $1 $a FonctionDemo6.o -lm && ./$1
-
