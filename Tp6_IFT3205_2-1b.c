@@ -102,10 +102,9 @@ int main(int argc,char **argv)
       }
   }
   
-  printf("Le moteur : %d : %f\n", i1, 2 / (i1 * delta_nu));
+  printf("Le moteur : %d : %f\n", i1, 1 / (i1 * delta_nu * 2));
   
   printf("Le clic : %d : %f\n", i2, 1 / (i2 * delta_nu));
-
   
   
   
@@ -114,7 +113,7 @@ int main(int argc,char **argv)
   strcat(BufSystVisuSig,"FFT_Moteur1.dat&");
   printf(" %s",BufSystVisuSig);
   system(BufSystVisuSig);
-
+  
   //==End=========================================================
   //==============================================================
 

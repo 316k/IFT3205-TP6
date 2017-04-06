@@ -126,11 +126,11 @@ int main(int argc,char **argv)
   
   ModVct(buff, buffmoy, buffmoyi, 512);
   CenterVct(buff, 512);
-  SaveSignalDat("FFT_Moteur2_PermMoy", buff, 512);
+  SaveSignalDat("FFT_Moteur2_PermMoyHann", buff, 512);
   
   //Visu
   strcpy(BufSystVisuSig,NAME_VISUALISER);
-  strcat(BufSystVisuSig,"FFT_Moteur2_PermMoy.dat&");
+  strcat(BufSystVisuSig,"FFT_Moteur2_PermMoyHann.dat&");
   printf(" %s",BufSystVisuSig);
   system(BufSystVisuSig);
 

@@ -79,11 +79,11 @@ int main(int argc,char **argv)
   FFT1D(Sign1,Sign1I,length);
   ModVct(Sign1M,Sign1,Sign1I,length);
   CenterVct(Sign1M,length);
-  SaveSignalDat("FFT_Moteur1",Sign1M,length);  
+  SaveSignalDat("FFT_Moteur2",Sign1M,length);  
   
   //Visu
   strcpy(BufSystVisuSig,NAME_VISUALISER);
-  strcat(BufSystVisuSig,"FFT_Moteur1.dat&");
+  strcat(BufSystVisuSig,"FFT_Moteur2.dat&");
   printf(" %s",BufSystVisuSig);
   system(BufSystVisuSig);
 
