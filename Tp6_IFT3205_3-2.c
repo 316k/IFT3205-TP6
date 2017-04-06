@@ -33,6 +33,18 @@
 |_| \_\___| .__/ \__|_|_|_|_|\___/|_| |_|___/
           |_|                                
 
+ ( _ )  
+ / _ \/\
+| (_>  <
+ \___/\/
+        
+ _            __  __                                                           
+| |__  _   _ / _|/ _|_ __ ___   ___  ___   ___   ___   ___  _   _ 
+| '_ \| | | | |_| |_| '_ ` _ \ / _ \/ _ \ / _ \ / _ \ / _ \| | | |
+| |_) | |_| |  _|  _| | | | | | (_)  (_) | (_) | (_) | (_) | |_| |
+|_.__/ \__,_|_| |_| |_| |_| |_|\___/\___/ \___/ \___/ \___/ \__, |
+                                                            |___/ 
+
 
  */
 /* Date    : --/--/2010                                 */
@@ -59,7 +71,9 @@
 /*------------------------------------------------*/
 /* PROTOTYPE DE FONCTIONS  -----------------------*/   
 /*------------------------------------------------*/
-
+float hamming(int t) {
+    return 0.54 - 0.46 * cos(2*PI * t/512.0);
+}
 /*------------------------------------------------*/
 /* PROGRAMME PRINCIPAL   -------------------------*/                     
 /*------------------------------------------------*/
@@ -72,18 +86,53 @@ int main(int argc,char **argv)
   //===============================
   //Question 2.1.(a)
   //===============================
-  float*  Sign1=LoadSignalDat("moteur1",&length);
+  float*  Sign1=LoadSignalDat("moteur2",&length);
   float*  Sign1I=fmatrix_allocate_1d(length);
   float*  Sign1M=fmatrix_allocate_1d(length);
+
+  float* buff = fmatrix_allocate_1d(512);
+  float* buffi = fmatrix_allocate_1d(512); // contre les vampires
   
-  FFT1D(Sign1,Sign1I,length);
-  ModVct(Sign1M,Sign1,Sign1I,length);
-  CenterVct(Sign1M,length);
-  SaveSignalDat("FFT_Moteur1",Sign1M,length);  
+  float* buffmoy = fmatrix_allocate_1d(512);
+  float* buffmoyi = fmatrix_allocate_1d(512);
+  
+  for(j=0; j<512; j++) {
+      buffmoy[j] = 0;
+      buffmoyi[j] = 0;
+  }
+
+  
+  k=0;
+  
+  for(i=0; i<length - 255; i += 256) {
+      k++;
+      for(j=0; j<512; j++) {
+          buff[j] = Sign1[i + j];
+          buffi[j] = 0;
+      }
+
+      FFT1D(buff, buffi, 512);
+      
+      for(j=0; j<512; j++) {
+          buffmoy[j] += buff[j];
+          buffmoyi[j] += buffi[j];
+      }
+  }
+
+  printf("keky%dkek\n", k);
+
+  for(j=0; j<512; j++) {
+      buffmoy[j] /= (float)k;
+      buffmoyi[j] /= (float)k;
+  }
+  
+  ModVct(buff, buffmoy, buffmoyi, 512);
+  CenterVct(buff, 512);
+  SaveSignalDat("FFT_Moteur2_PermMoy",buff,512);  
   
   //Visu
   strcpy(BufSystVisuSig,NAME_VISUALISER);
-  strcat(BufSystVisuSig,"FFT_Moteur1.dat&");
+  strcat(BufSystVisuSig,"FFT_Moteur2_PermMoy.dat&");
   printf(" %s",BufSystVisuSig);
   system(BufSystVisuSig);
 

@@ -72,7 +72,7 @@ int main(int argc,char **argv)
   //===============================
   //Question 2.1.(a)
   //===============================
-  float*  Sign1=LoadSignalDat("moteur1",&length);
+  float*  Sign1=LoadSignalDat("moteur2",&length);
   float*  Sign1I=fmatrix_allocate_1d(length);
   float*  Sign1M=fmatrix_allocate_1d(length);
   
