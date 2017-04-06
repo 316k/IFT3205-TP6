@@ -109,15 +109,13 @@ int main(int argc,char **argv)
       for(j=0; j<512; j++) {
           buff[j] = hamming(j) * Sign1[i + j];
           buffi[j] = 0;
-
-          fprintf(stderr, "%i\n", i + j);
       }
       
       FFT1D(buff, buffi, 512);
       
       for(j=0; j<512; j++) {
-          buffmoy[j] += buff[j];
-          buffmoyi[j] += buffi[j];
+          buffmoy[j] += fabs(buff[j]);
+          buffmoyi[j] += fabs(buffi[j]);
       }
   }
 
